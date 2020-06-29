@@ -1,11 +1,14 @@
 package entities;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 import repository.UserRepository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
+@Service
 public class UserService {
 
     @Autowired
