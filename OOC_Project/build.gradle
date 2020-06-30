@@ -3,7 +3,7 @@ plugins {
     id "org.springframework.boot" version "2.3.1.RELEASE"
 }
 
-group 'kpm.project'
+group 'org.example'
 version '1.0'
 
 repositories {
