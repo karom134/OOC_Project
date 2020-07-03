@@ -33,8 +33,8 @@ public class UserService {
     }
 
     public List<User> getUserByUsername(String username) {
-        TypedQuery query = entityManager.createQuery("select c from User c where c.username = ?1", User.class);
-        query.setParameter(1,username);
-        return query.getResultList();
+       TypedQuery<User> query = entityManager.createQuery("select c from User c where c.username = ?1", User.class);
+       query.setParameter(1,username);
+       return query.getResultList();
     }
 }
