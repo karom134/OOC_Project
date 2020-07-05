@@ -10,5 +10,10 @@
 <p>
     ${display}
 </p>
+<form method="post">
+<button onclick="location.href='http://localhost:8080/home'" type="button">
+    Back</button>
+<br>
+</form>
 </body>
 </html>

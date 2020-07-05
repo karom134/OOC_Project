@@ -16,7 +16,10 @@
     <input type="text" placeholder="Enter Ingredient" name="IngredientName" required>
     <br>
     <br>
-    <button type="submit" name="sent">Sent</button>
+    <button type="submit" name="button" value="sentInfo">Sent</button>
+    <button onclick="location.href='http://localhost:8080/home'" type="button">
+        Back</button>
+    <br>
 </form>
 </p>
 </body>

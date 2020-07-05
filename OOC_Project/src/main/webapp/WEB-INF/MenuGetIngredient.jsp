@@ -16,7 +16,10 @@
     <input type="text" placeholder="Enter Menu" name="menuName" required>
     <br>
     <br>
-    <button type="submit" name="sent">Sent</button>
+    <button type="submit" name="button" value ="getMenu">Sent</button>
+    <button onclick="location.href='http://localhost:8080/home'" type="button">
+        Back</button>
+    <br>
 </form>
 </p>
 </body>

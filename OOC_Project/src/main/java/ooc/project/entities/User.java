@@ -23,4 +23,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column
+    private Integer enabled;
+
+    @Column(nullable = false)
+    private String role;
+
 }

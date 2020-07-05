@@ -8,7 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-public class IngredientMenuController {
+public class MenuGetIngredientController {
 
     @Autowired
     IngredientMenuService ingredientMenuService;
@@ -21,18 +21,8 @@ public class IngredientMenuController {
     }
 
     @PostMapping("/GetIng")
-    public String doGetIngredient(@RequestParam String menuName, Model model) {
+    public String doGetIngredient(@RequestParam String menuName,@RequestParam(value = "button") String button, Model model) {
         model.addAttribute("display", ingredientMenuService.getIngredientByMenu(menuName));
         return "ReturnIngredient";
     }
-
-//    @PostMapping("/getIngredient")
-//    public Set<String> getIngredientByMenu(@RequestBody Map<String, String> map) {
-//        return ingredientMenuService.getIngredientByMenu(map.get("menu_name"));
-//    }
-//
-//    @PostMapping("/getMenu")
-//    public Set<String> getMenuByIngredient(@RequestBody Map<String, String> map) {
-//        return ingredientMenuService.getMenuByIngredient(map.get("ing1"));
-//    }
 }

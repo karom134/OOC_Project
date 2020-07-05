@@ -26,11 +26,10 @@
     <input type="password" placeholder="Enter Password" name="password" required>
     <br>
     <br>
-    <button type="submit" name="addUser">AddUser</button>
+    <button type="submit" name="button" value="addUser">AddUser</button>
+    <button onclick="location.href='http://localhost:8080/login'" type="button">
+        Back</button>
 </form>
-<%--<form method="post">--%>
-<%--    <button type="submit" name="back">Back</button>--%>
-<%--</form>--%>
 </p>
 </body>
 </html>

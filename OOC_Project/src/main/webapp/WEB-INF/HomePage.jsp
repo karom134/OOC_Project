@@ -20,17 +20,13 @@
     ${error}
 </p>
 <p>
-<form method="post" id="save-form" action="save">
-    <input type="hidden" id="action" name="action" />
-    <button type="submit" name="MenuGetIngredient" id="MenuGetIngredient"></button>
-    <br>
-    <button type="submit" name="IngredientGetMenu" id="IngredientGetMenu"></button>
+<form method="post">
+    <button type="submit" name="button" value="getIng">GetIngredient</button>
+    <button type="submit" name="button" value="getMenu">GetMenu</button>
+    <button onclick="location.href='http://localhost:8080/login'" type="button">
+        LogOut</button>
     <br>
 </form>
-<script>
-    $('#MenuGetIngredient').on('click', function(){$('#action').val('MenuGetIngredient'); $('#save-form').submit();});
-    $('#IngredientToMenu.jsp').on('click', function(){$('#action').val('IngredientToMenu.jsp'); $('#save-form').submit();});
-</script>
 </p>
 </body>
 </html>

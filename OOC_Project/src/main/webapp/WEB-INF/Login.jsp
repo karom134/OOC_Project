@@ -30,7 +30,8 @@
     <br>
     <button type="submit" name="login">Login</button>
     <br>
-    <button type="submit" name="register">Register</button>
+    <button onclick="location.href='http://localhost:8080/register'" type="button">
+        Register</button>
     <br>
 </form>
 </p>
