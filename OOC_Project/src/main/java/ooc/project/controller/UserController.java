@@ -19,10 +19,9 @@ public class UserController {
     }
 
     @GetMapping("/getUser")
-    public List<User> getOneUser() {
-        return userService.getUserByUsername("maylin");
+    public User getOneUser(@RequestParam String username) {
+        return userService.getUserByUsername(username);
     }
-
     @PostMapping("/addUser")
     public void addingUser(@RequestBody User user) {
         userService.addUser(user);

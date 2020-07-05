@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.sql.ResultSet;
 import java.util.List;
 
 @Service
@@ -32,9 +33,21 @@ public class UserService {
         userRepository.deleteById(integer);
     }
 
-    public List<User> getUserByUsername(String username) {
+    public User getUserByUsername(String username) {
        TypedQuery<User> query = entityManager.createQuery("select c from User c where c.username = ?1", User.class);
        query.setParameter(1,username);
-       return query.getResultList();
+       return query.getResultList().get(0);
+    }
+
+    public boolean checkIfUserExits(String username) {
+        TypedQuery<User> query = entityManager.createQuery("select c from User c where c.username = ?1", User.class);
+        query.setParameter(1,username);
+        List<User> userList = query.getResultList();
+        if (userList.size() == 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }

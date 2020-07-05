@@ -4,7 +4,7 @@
     <title>Login Page</title>
 </head>
 <h2>
-    Get Your Ingredient by The Menu !!
+    Get Your Menu by Ingredient !!
 </h2>
 <body>
 <p>
