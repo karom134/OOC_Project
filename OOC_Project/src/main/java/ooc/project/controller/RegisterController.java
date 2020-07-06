@@ -34,7 +34,7 @@ public class RegisterController {
             user.setEnabled(1);
             userService.addUser(user);
             model.addAttribute("error", "Successful Registration");
-            return "Login";
+            return "redirect:/login";
         } else {
             model.addAttribute("error", "Your username is already exit in the database");
             return "Register";
