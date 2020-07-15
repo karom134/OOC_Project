@@ -33,10 +33,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http
-                .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
+        http.authorizeRequests().antMatchers("/api/xxx").permitAll().and().authorizeRequests().anyRequest().authenticated().and()
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/home",true)
