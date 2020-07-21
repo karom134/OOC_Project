@@ -6,38 +6,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.Map;
+
+@RestController
 public class RegisterController {
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/register")
-    public String registerForm(){
-        return "Register";
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @GetMapping("/api/register")
+    public String registerForm() {
+        return "test message";
     }
 
-    @PostMapping("/register")
-    public String doRegister(@RequestParam String username, @RequestParam String password, @RequestParam(value = "button") String button,  Model model) {
-        if (!userService.checkIfUserExits(username)) {
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(passwordEncoder.encode(password));
-            user.setRole("ROLE_USER");
-            user.setEnabled(1);
-            userService.addUser(user);
-            model.addAttribute("error", "Successful Registration");
-            return "redirect:/login";
-        } else {
-            model.addAttribute("error", "Your username is already exit in the database");
-            return "Register";
-        }
+    @PostMapping("/api/register")
+    public void doRegister(@RequestBody Map<String,String> map) {
+        String username=map.get("username");
+        String password=map.get("password");
+//        System.out.println(username);
+        User user=new User();
+        user.setRole("ROLE_USER");
+        user.setEnabled(1);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setUsername(username);
+        userService.addUser(user);
+        //send error message
+
     }
 }
