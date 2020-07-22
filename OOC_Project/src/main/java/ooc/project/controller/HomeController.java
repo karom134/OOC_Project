@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class HomeController {
 
-    @GetMapping("/home")
+    @GetMapping("/api//home")
     public String homeForm(){
         return "HomePage";
     }
 
-    @PostMapping("/home")
+    @PostMapping("/api//home")
     public String doGetIng(@RequestParam(value = "button") String button, Model model) {
         if (button.equalsIgnoreCase("getIng")) {
-            return "redirect:/GetIng";
+            return "redirect:/api/GetIng";
         }
         else {
-            return "redirect:/GetMenu";
+            return "redirect:/api/GetMenu";
         }
     }
 }

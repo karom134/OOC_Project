@@ -13,14 +13,14 @@ public class MenuGetIngredientController {
     @Autowired
     IngredientMenuService ingredientMenuService;
 
-    @GetMapping("/GetIng")
+    @GetMapping("/api/GetIng")
     public String getIngredientFromMenu(ModelMap modelMap){
         String welcome = "Please enter your menu in order to get ingredients";
         modelMap.addAttribute("display",welcome);
         return "MenuGetIngredient";
     }
 
-    @PostMapping("/GetIng")
+    @PostMapping("/api/GetIng")
     public String doGetIngredient(@RequestParam String menuName,@RequestParam(value = "button") String button, Model model) {
         model.addAttribute("display", ingredientMenuService.getIngredientByMenu(menuName));
         return "ReturnIngredient";

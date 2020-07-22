@@ -20,8 +20,7 @@ public class RegisterController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/api/register")
-    public String registerForm() {
-        return "test message";
+    public void registerForm() {
     }
 
     @PostMapping("/api/register")
@@ -36,6 +35,5 @@ public class RegisterController {
         user.setUsername(username);
         userService.addUser(user);
         //send error message
-
     }
 }
