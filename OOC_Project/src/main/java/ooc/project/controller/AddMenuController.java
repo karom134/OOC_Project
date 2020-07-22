@@ -11,20 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 public class AddMenuController {
 
     @Autowired
     IngredientMenuService ingredientMenuService;
 
-    @PostMapping("/api/addMenu")
-    public void addMenu(@RequestBody Map<String, String> map) {
-        List<String> lst = new ArrayList<>();
-        for (String key : map.keySet()) {
-            if (!key.equals("menu_name")) {
-                lst.add(map.get(key)); // add ingredient in to the lst
-            }
-        }
-        ingredientMenuService.addOrUpdate(lst, map.get("menu_name"));
+    @PostMapping("/addOrUpdate")
+    public String addOrUpdateMenu(@RequestBody Map<String,List<String>> map){
+        String menuName=map.get("menuName").get(0);
+        List<String> ingredients=map.get("ingLst");
+        return ingredientMenuService.add(ingredients,menuName);
     }
 }

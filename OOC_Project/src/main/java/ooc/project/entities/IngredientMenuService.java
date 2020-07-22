@@ -25,61 +25,117 @@ public class IngredientMenuService {
     @Autowired
     private MenuRepository menuRepository;
 
-    public Set<String> getIngredientByMenu(String menuName) {
-        Set<String> ingredientNameSet = new HashSet<>();
-        TypedQuery<Menu> menuQuery = entityManager.createQuery("select c from Menu c where c.name =?1",Menu.class);
-        menuQuery.setParameter(1,menuName);
-        for (Ingredient ingredient : menuQuery.getResultList().get(0).getIngredientSet()) { //get the name of ingredient out of the IngredientSet in ingredient
-            ingredientNameSet.add(ingredient.getName());
+    public Integer getMenuIdByName(String menuName){
+        List<Menu> menu=menuQuery(menuName);
+        if(menu.size()==0){
+            return -1;
         }
-        return ingredientNameSet;
+        return menu.get(0).getId();
     }
 
-    public Set<String> getMenuByIngredient(String nameIngredient) {
-        Set<String> MenuNameSet = new HashSet<>();
-        TypedQuery<Ingredient> menuQuery = entityManager.createQuery("select c from Ingredient c where c.name =?1",Ingredient.class);
-        menuQuery.setParameter(1,nameIngredient);
-        for (Menu menu : menuQuery.getResultList().get(0).getMenuSet()) { //get the name of menu out of the MenuSet in menu
-            MenuNameSet.add(menu.getName());
+    public Set<String> getIngredientByMenu(String menuName){
+        Integer id=getMenuIdByName(menuName);
+        Set<String> nameSet=new HashSet<>();
+        if(id!=-1) {
+            Menu menu = entityManager.find(Menu.class, id);
+            Set<Ingredient> ingredients = menu.getIngredientSet();
+            for (Ingredient ing : ingredients) {
+                nameSet.add(ing.getName());
+            }
         }
-        return MenuNameSet;
+        else{
+            nameSet.add("Invalid Menu Name");
+        }
+        return nameSet;
     }
 
+    public Integer getIngredientIdByName(String ingredientName){
+        List<Ingredient> ingredient=ingredientQuery(ingredientName);
+        if(ingredient.size()==0){
+            return -1;
+        }
+        return ingredient.get(0).getId();
+    }
 
-    public void addOrUpdate(List<String> ingredients, String menuName) {
-        Set<Ingredient> ingredientSet = new HashSet<>();
-        Set<Menu> menuSet = new HashSet<>();
-        TypedQuery<Menu> menuQuery = entityManager.createQuery("select c from Menu c where c.name = ?1", Menu.class);
-        menuQuery.setParameter(1,menuName);
-        List<Menu> checkMenu = menuQuery.getResultList();
-        Menu menu;
-        if(checkMenu.size()==0) { // if don't have to menu then it is going to be zero , we use list because we are not sure if the data exit in the database
-            menu = new Menu();
-            menu.setName(menuName); //set name for menu
-            menu.setIngredientSet(new HashSet<>()); //set ingredientSet into menu
-            menuSet.add(menu);
+    public Set<String> getMenuByIngredient(String ingredientName){
+        Integer id=getIngredientIdByName(ingredientName);
+        Set<String> nameSet=new HashSet<>();
+        if (id != -1) {
+            Ingredient ingredient = entityManager.find(
+                    Ingredient.class, id);
+            Set<Menu> menus = ingredient.getMenuSet();
+            for (Menu ing : menus) {
+                nameSet.add(ing.getName());
+            }
         }
-        else {
-            menu=checkMenu.get(0); // get that menu out , we are sure that it is just only one menu in there because the name is unique
+        else{
+            nameSet.add("Invalid Ingredient Name");
         }
-        for(String ingredientName: ingredients) {
-            TypedQuery<Ingredient> query = entityManager.createQuery("select c from Ingredient c where c.name =?1",Ingredient.class);
-            query.setParameter(1,ingredientName); // find the ingredient
-            List<Ingredient> checkIngredient = query.getResultList();
-            if(checkIngredient.size() == 0){
-                Ingredient ing = new Ingredient();
+        return nameSet;
+    }
+    public List<Menu> menuQuery(String menuName){
+        TypedQuery<Menu> query=entityManager.createQuery(
+                "select c from Menu c where c.name = ?1",
+                Menu.class);
+        query.setParameter(1,menuName);
+        return query.getResultList();
+    }
+
+    public List<Ingredient> ingredientQuery(String ingredientName ) {
+        TypedQuery<Ingredient> query = entityManager.createQuery(
+                "select c from Ingredient c where c.name = ?1",
+                Ingredient.class);
+        query.setParameter(1, ingredientName);
+        return query.getResultList();
+    }
+    public String add(List<String> ingredients,String menuName){
+        Set<Ingredient> ingredientSet=new HashSet<>();
+        Set<Menu> menuSet=new HashSet<>();
+        List<Menu> checkMenu=menuQuery(menuName);
+        if(checkMenu.size()==0) {
+            addMenu(ingredients,menuName);
+            return "add success";
+        }
+        else{
+            return "menu already exist";
+        }
+    }
+
+    private void construct(List<String> ingredients, Set<Ingredient> ingredientSet, Set<Menu> menuSet, Menu menu) {
+        for(String ingredientName: ingredients){
+            List<Ingredient> checkIngredient=ingredientQuery(ingredientName);
+            List<Menu> checkMenu=menuQuery(ingredientName);
+            if(checkMenu.size()!=0){
+                for(Ingredient ingredient:checkMenu.get(0).getIngredientSet()){
+                    ingredient.getMenuSet().add(menu);
+                    ingredientSet.add(ingredient);
+                }
+                continue;
+            }
+            if(checkIngredient.size()==0){
+                Ingredient ing=new Ingredient();
                 ing.setName(ingredientName);
-                ing.setMenuSet(menuSet); //ingredient might be use with lots of menu
+                ing.setMenuSet(menuSet);
                 ingredientSet.add(ing);
             }
-            else {
-                Ingredient ingredient = checkIngredient.get(0);
-                ingredient.getMenuSet().add(menu); // this ingredient do which menu
+            else{
+                Ingredient ingredient= checkIngredient.get(0);
+                ingredient.getMenuSet().add(menu);
                 ingredientSet.add(ingredient);
             }
         }
         menu.getIngredientSet().addAll(ingredientSet);
         menuRepository.save(menu);
         ingredientRepository.saveAll(ingredientSet);
+    }
+
+    public void addMenu(List<String> ingredients,String menuName){
+        Set<Menu> menuSet=new HashSet<>();
+        Menu menu = new Menu();
+        menu.setName(menuName);
+        menu.setIngredientSet(new HashSet<>());
+        menuSet.add(menu);
+        Set<Ingredient> ingredientSet=new HashSet<>();
+        construct(ingredients, ingredientSet, menuSet, menu);
     }
 }

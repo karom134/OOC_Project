@@ -28,19 +28,23 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers("/api/register")
-                .antMatchers("/api/GetMenu");
+                .antMatchers("/api/home")
+                .antMatchers("/addOrUpdate")
+                .antMatchers("/GetIng")
+                .antMatchers("/api/login")
+                .antMatchers("/getMenu");
     }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests().anyRequest().authenticated().and()
-                .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/home",true)
-                .permitAll()
-                .and()
-                .logout().permitAll();
+//        http.authorizeRequests().anyRequest().authenticated().and()
+//                .formLogin()
+//                .loginPage("/login")
+//                .defaultSuccessUrl("/home",true)
+//                .permitAll()
+//                .and()
+//                .logout().permitAll();
     }
 }
