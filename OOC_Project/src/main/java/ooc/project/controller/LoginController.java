@@ -25,6 +25,9 @@ public class LoginController {
         String password=map.get("password");
         User user=userService.getUserByUsername(username);
         BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+        if(user==null){
+            return "fail";
+        }
         if(passwordEncoder.matches(password,user.getPassword())){
             return "Success";
         }

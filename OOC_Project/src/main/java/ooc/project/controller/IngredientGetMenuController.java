@@ -38,6 +38,7 @@ public class IngredientGetMenuController {
             }
             scoreMap.get(score).add(name);
         }
+        Boolean limited=false;
         for(int s=arr.size();s>0;s--){
             for(String name:scoreMap.getOrDefault(s,new ArrayList<>())){
                 Map<String,List<String>> map=new HashMap<>();
@@ -50,8 +51,12 @@ public class IngredientGetMenuController {
                 }
                 map.put("ingLst",keeper);
                 finalList.add(map);
+                if(finalList.size()>15){
+                    limited=true;
+                    break;
+                }
             }
-            if(finalList.size()>10){
+            if(limited){
                 break;
             }
         }
