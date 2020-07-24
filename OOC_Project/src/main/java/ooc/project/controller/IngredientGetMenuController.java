@@ -15,7 +15,7 @@ public class IngredientGetMenuController {
     @Autowired
     IngredientMenuService ingredientMenuService;
 
-    @PostMapping("/getMenu")
+    @PostMapping("/api/getMenu")
     public List<Map<String,List<String>>> doGetMenu(@RequestBody Map<String,String> map){
         List<Set<String>> temporaryStorage=new ArrayList<>();
         for(String ingredient: map.values()){

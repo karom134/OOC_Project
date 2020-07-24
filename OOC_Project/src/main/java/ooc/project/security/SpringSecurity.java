@@ -32,7 +32,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addOrUpdate")
                 .antMatchers("/GetIng")
                 .antMatchers("/api/login")
-                .antMatchers("/getMenu");
+                .antMatchers("/api/getMenu");
     }
 
 
