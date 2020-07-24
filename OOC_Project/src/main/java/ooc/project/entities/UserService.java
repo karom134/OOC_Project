@@ -29,25 +29,14 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void deleteUser(Integer integer) {
-        userRepository.deleteById(integer);
-    }
 
     public User getUserByUsername(String username) {
        TypedQuery<User> query = entityManager.createQuery("select c from User c where c.username = ?1", User.class);
        query.setParameter(1,username);
-       return query.getResultList().get(0);
-    }
-
-    public boolean checkIfUserExits(String username) {
-        TypedQuery<User> query = entityManager.createQuery("select c from User c where c.username = ?1", User.class);
-        query.setParameter(1,username);
-        List<User> userList = query.getResultList();
-        if (userList.size() == 0) {
-            return false;
-        }
-        else {
-            return true;
+        if (query.getResultList().size() > 0) {
+            return query.getResultList().get(0);
+        } else {
+            return null;
         }
     }
 }
