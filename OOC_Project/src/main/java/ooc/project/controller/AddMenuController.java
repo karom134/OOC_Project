@@ -17,7 +17,7 @@ public class AddMenuController {
     @Autowired
     IngredientMenuService ingredientMenuService;
 
-    @PostMapping("/addOrUpdate")
+    @PostMapping("/api/add")
     public String addOrUpdateMenu(@RequestBody Map<String,List<String>> map){
         String menuName=map.get("menuName").get(0);
         List<String> ingredients=map.get("ingLst");

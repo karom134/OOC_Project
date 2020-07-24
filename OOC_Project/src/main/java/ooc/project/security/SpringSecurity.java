@@ -29,7 +29,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/api/register")
                 .antMatchers("/api/home")
-                .antMatchers("/addOrUpdate")
+                .antMatchers("/api/add")
                 .antMatchers("/GetIng")
                 .antMatchers("/api/login")
                 .antMatchers("/api/getMenu");
