@@ -41,6 +41,9 @@ public class IngredientGetMenuController {
         Boolean limited=false;
         for(int s=arr.size();s>0;s--){
             for(String name:scoreMap.getOrDefault(s,new ArrayList<>())){
+                if (name.equals("Invalid Ingredient Name")) {
+                    continue;
+                }
                 Map<String,List<String>> map=new HashMap<>();
                 List<Menu> menuList=ingredientMenuService.menuQuery(name);
                 map.put("menuName",new ArrayList<>());
@@ -51,7 +54,7 @@ public class IngredientGetMenuController {
                 }
                 map.put("ingLst",keeper);
                 finalList.add(map);
-                if(finalList.size()>15){
+                if(finalList.size()>5){
                     limited=true;
                     break;
                 }
