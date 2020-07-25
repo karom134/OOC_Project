@@ -16,9 +16,9 @@ public class IngredientGetMenuController {
     IngredientMenuService ingredientMenuService;
 
     @PostMapping("/api/getMenu")
-    public List<Map<String,List<String>>> doGetMenu(@RequestBody Map<String,String> map){
+    public List<Map<String,List<String>>> doGetMenu(@RequestBody Map<String,List<String>> map){
         List<Set<String>> temporaryStorage=new ArrayList<>();
-        for(String ingredient: map.values()){
+        for(String ingredient: map.get("generatorIngre")){
             temporaryStorage.add(ingredientMenuService.getMenuByIngredient(ingredient));
         }
         return helper(temporaryStorage);
