@@ -54,7 +54,7 @@ public class IngredientGetMenuController {
                 }
                 map.put("ingLst",keeper);
                 finalList.add(map);
-                if(finalList.size()>5){
+                if(finalList.size()>=10){
                     limited=true;
                     break;
                 }
