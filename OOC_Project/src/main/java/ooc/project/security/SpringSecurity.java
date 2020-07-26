@@ -24,27 +24,27 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("select username, role from user where username=?");
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring()
-                .antMatchers("/api/register")
-                .antMatchers("/api/home")
-                .antMatchers("/api/add")
-                .antMatchers("/GetIng")
-                .antMatchers("/api/login")
-                .antMatchers("/api/getMenu");
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring()
+//                .antMatchers("/api/register")
+//                .antMatchers("/api/home")
+//                .antMatchers("/api/add")
+//                .antMatchers("/GetIng")
+//                .antMatchers("/api/login")
+//                .antMatchers("/api/getMenu");
+//    }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-//        http.authorizeRequests().anyRequest().authenticated().and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .defaultSuccessUrl("/home",true)
-//                .permitAll()
-//                .and()
-//                .logout().permitAll();
+        http.authorizeRequests()
+                .antMatchers("/api/register").permitAll()
+                .antMatchers("/api/home").permitAll()
+                .antMatchers("/api/add").permitAll()
+                .antMatchers("/GetIng").permitAll()
+                .antMatchers("/api/login").permitAll()
+                .antMatchers("/api/getMenu").permitAll();
     }
 }
